@@ -1,6 +1,12 @@
 import { BaseEntity } from 'src/database/base.entity';
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
-import { Requester } from './requester.entity';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
+import { RequesterEntity } from './requester.entity';
 
 export enum RequestType {
   A = 'A',
@@ -11,13 +17,16 @@ export enum RequestType {
 @Entity({
   name: 'request',
 })
-export class Request extends BaseEntity {
+export class RequestEntity extends BaseEntity {
   @Column({ nullable: true, enum: Object.values(RequestType) })
   type: RequestType;
 
   @Column({ type: 'timestamp' })
   expirationDate: Date;
 
-  @ManyToOne(() => Requester, (requester) => requester.requests)
-  requester: Requester;
+  @ManyToOne(() => RequesterEntity, (requester) => requester.requests, {
+    nullable: false,
+  })
+  @JoinColumn({ name: 'requester' })
+  requester: RequesterEntity;
 }

@@ -4,7 +4,7 @@ import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 @Entity({
   name: 'approver',
 })
-export class Approver extends BaseEntity {
+export class ApproverEntity extends BaseEntity {
   @Column()
   name: string;
 
