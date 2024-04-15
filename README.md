@@ -26,6 +26,14 @@
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
+## ENV variables
+
+Create a .env file in the root directory and copy the content of the .env.example file into it, replace the values accordingly.
+
+## Documentation
+
+You can find the swagger documentation on `http://localhost:3009/api`
+
 ## Installation
 
 ```bash
