@@ -28,5 +28,5 @@ export class RequestEntity extends BaseEntity {
     nullable: false,
   })
   @JoinColumn({ name: 'requester' })
-  requester: RequesterEntity;
+  requester: string;
 }

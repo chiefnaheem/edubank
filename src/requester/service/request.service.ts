@@ -2,6 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { RequestEntity } from '../entities/request.entity';
+import { RequesterService } from './requester.service';
 
 @Injectable()
 export class RequestService {
@@ -26,7 +27,9 @@ export class RequestService {
 
   async findRequests(): Promise<RequestEntity[]> {
     try {
-      const data = await this.requestRepository.find();
+      const data = await this.requestRepository.find({
+        relations: ['requester'],
+      });
 
       return data;
     } catch (error) {
@@ -38,6 +41,7 @@ export class RequestService {
     try {
       const expanse = await this.requestRepository.findOne({
         where: { id },
+        relations: ['requester'],
       });
 
       return expanse;

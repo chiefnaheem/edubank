@@ -15,7 +15,7 @@ import { RequesterService } from './service/requester.service';
     TypeOrmModule.forFeature([RequestEntity, RequesterEntity, ApproverEntity]),
   ],
   providers: [ApproverService, RequesterService, RequestService],
-  controllers: [ApproverController, RequestController, RequesterController],
+  controllers: [ApproverController, RequesterController, RequestController],
   exports: [ApproverService, RequesterService, RequestService],
 })
 export class RequesterModule {}

@@ -15,18 +15,11 @@ import { RequesterService } from '../service/requester.service';
 @ApiTags('request-controller')
 @Controller('request')
 export class RequestController {
-  constructor(
-    private readonly requestService: RequestService,
-    private readonly requesterService: RequesterService,
-  ) {}
+  constructor(private readonly requestService: RequestService) {}
 
   @Post()
   async createRequest(@Body() body: RequestDto): Promise<ResponseDto> {
-    const requester = await this.requesterService.findRequester(body.requester);
-    const approver = await this.requestService.createRequest({
-      ...body,
-      requester,
-    });
+    const approver = await this.requestService.createRequest(body);
     return {
       statusCode: 200,
       message: 'success',

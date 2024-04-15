@@ -9,10 +9,7 @@ import {
 import { RequestType } from '../entities/request.entity';
 
 export class RequestDto {
-  @ApiProperty({
-    type: RequestType,
-    example: RequestType.A,
-  })
+  @ApiProperty()
   @IsEnum(RequestType)
   @IsNotEmpty()
   type: RequestType;

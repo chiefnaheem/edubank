@@ -20,14 +20,6 @@ async function bootstrap() {
     .setTitle('Edubank API')
     .setDescription('Edubank Documentation')
     .setVersion('1.0')
-    .addBearerAuth(
-      {
-        type: 'http',
-        schema: 'Bearer',
-        bearerFormat: 'Token',
-      } as SecuritySchemeObject,
-      'Bearer',
-    )
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);

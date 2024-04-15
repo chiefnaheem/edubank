@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import typeOrmConfig from 'typeorm.config';
 import { ConfigModule } from '@nestjs/config';
+import { RequesterModule } from './requester/requester.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { ConfigModule } from '@nestjs/config';
       verboseMemoryLeak: false,
       ignoreErrors: false,
     }),
+    RequesterModule,
   ],
   controllers: [AppController],
   providers: [AppService],
