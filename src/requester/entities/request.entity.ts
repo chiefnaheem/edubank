@@ -29,4 +29,10 @@ export class RequestEntity extends BaseEntity {
   })
   @JoinColumn({ name: 'requester' })
   requester: string;
+
+  @Column({ nullable: true })
+  isApproved: boolean;
+
+  @Column({ nullable: true })
+  isDenied: boolean;
 }

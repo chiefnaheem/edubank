@@ -64,4 +64,33 @@ export class RequestService {
       throw error;
     }
   }
+
+  async updateRequestStatus(
+    requestId: string,
+    isApproved: boolean,
+  ): Promise<void> {
+    try {
+      const request = await this.findRequest(requestId);
+      if (!request) {
+        throw new NotFoundException(`Request with ID ${requestId} not found`);
+      }
+
+      if (request.isApproved || request.isDenied) {
+        throw new Error(
+          `Request with ID ${requestId} has already been approved or denied`,
+        );
+      }
+
+      if (isApproved) {
+        request.isApproved = true;
+      } else {
+        request.isDenied = true;
+      }
+
+      await this.requestRepository.save(request);
+    } catch (error) {
+      this.logger.error(error.message);
+      throw error;
+    }
+  }
 }
