@@ -24,6 +24,12 @@ export class ApproverController {
     private readonly requestService: RequestService,
   ) {}
 
+  /**
+   * Create a new approver
+   * @summary Create a new approver
+   * @param body Details of the approver to create
+   * @returns Response indicating success or failure
+   */
   @Post()
   async createApprover(@Body() body: ApproverDto): Promise<ResponseDto> {
     const approver = await this.approverService.createApprover(body);
@@ -34,6 +40,11 @@ export class ApproverController {
     };
   }
 
+  /**
+   * Get all approvers
+   * @summary Get a list of all approvers
+   * @returns Response containing the list of approvers
+   */
   @Get()
   async getApprovers(): Promise<ResponseDto> {
     const approvers = await this.approverService.findApprovers();
@@ -44,6 +55,12 @@ export class ApproverController {
     };
   }
 
+  /**
+   * Get an approver by ID
+   * @summary Get details of a specific approver
+   * @param id ID of the approver
+   * @returns Response containing details of the approver
+   */
   @Get(':id')
   async getApprover(
     @Param('id', ParseUUIDPipe) id: string,
@@ -55,34 +72,6 @@ export class ApproverController {
       data: approver,
     };
   }
-
-  //   @ApiQuery({
-  //     type: Boolean,
-  //     example: false,
-  //     description: 'Action to take',
-  //   })
-  //   @ApiQuery({
-  //     name: 'requestId',
-  //     type: String,
-  //     description: 'Id of the request to approve',
-  //   })
-  //   @ApiParam({
-  //     description: 'ID of the approver',
-  //   })
-  //   @Patch('approve-deny-request/:id')
-  //   @UseGuards(ApproverGuard)
-  //   async approveOrDeny(
-  //     @Param('id', ParseUUIDPipe) id: string,
-  //     @Query('requestId', ParseUUIDPipe) requestId: string,
-  //     @Query('isApproved') isApproved: boolean,
-  //   ): Promise<ResponseDto> {
-  //     const data = await this.requestService.updateRequestStatus(id, isApproved);
-  //     return {
-  //       statusCode: 200,
-  //       message: 'success',
-  //       data,
-  //     };
-  //   }
 
   /**
    * Approve or deny a request
