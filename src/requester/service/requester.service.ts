@@ -11,7 +11,7 @@ export class RequesterService {
     private requestRepository: Repository<RequesterEntity>,
   ) {}
 
-  async createRequest(
+  async createRequester(
     requester: Partial<RequesterEntity>,
   ): Promise<RequesterEntity> {
     try {
@@ -26,7 +26,7 @@ export class RequesterService {
     }
   }
 
-  async findRequests(): Promise<RequesterEntity[]> {
+  async findRequesters(): Promise<RequesterEntity[]> {
     try {
       const data = await this.requestRepository.find();
 
@@ -36,7 +36,7 @@ export class RequesterService {
     }
   }
 
-  async findRequest(id: string): Promise<RequesterEntity | undefined> {
+  async findRequester(id: string): Promise<RequesterEntity | undefined> {
     try {
       const expanse = await this.requestRepository.findOne({
         where: { id },

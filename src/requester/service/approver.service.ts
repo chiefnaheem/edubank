@@ -12,7 +12,7 @@ export class ApproverService {
     private approverRepository: Repository<ApproverEntity>,
   ) {}
 
-  async createRequest(
+  async createApprover(
     request: Partial<ApproverEntity>,
   ): Promise<ApproverEntity> {
     try {
@@ -27,7 +27,7 @@ export class ApproverService {
     }
   }
 
-  async findRequests(): Promise<ApproverEntity[]> {
+  async findApprovers(): Promise<ApproverEntity[]> {
     try {
       const data = await this.approverRepository.find();
 
@@ -37,7 +37,7 @@ export class ApproverService {
     }
   }
 
-  async findRequest(id: string): Promise<ApproverEntity | undefined> {
+  async findApprover(id: string): Promise<ApproverEntity | undefined> {
     try {
       const expanse = await this.approverRepository.findOne({
         where: { id },

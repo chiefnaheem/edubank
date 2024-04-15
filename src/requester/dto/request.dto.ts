@@ -15,7 +15,7 @@ export class RequestDto {
   })
   @IsEnum(RequestType)
   @IsNotEmpty()
-  type: string;
+  type: RequestType;
 
   @ApiProperty({
     type: Date,
