@@ -1,5 +1,6 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { isPast } from 'date-fns';
 import { Repository } from 'typeorm';
 import { RequestEntity } from '../entities/request.entity';
 import { RequesterService } from './requester.service';
@@ -46,6 +47,20 @@ export class RequestService {
 
       return expanse;
     } catch (error) {
+      throw error;
+    }
+  }
+
+  async isRequestExpired(requestId: string): Promise<boolean> {
+    try {
+      const request = await this.findRequest(requestId);
+      if (!request) {
+        throw new NotFoundException(`Request with ID ${requestId} not found`);
+      }
+      const expirationDate = request.expirationDate;
+      return isPast(expirationDate);
+    } catch (error) {
+      this.logger.error(error);
       throw error;
     }
   }

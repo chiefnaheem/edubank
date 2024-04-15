@@ -18,47 +18,6 @@ export class ApproverGuard implements CanActivate {
     private readonly approverService: ApproverService,
     private readonly requestService: RequestService,
   ) {}
-  //   async canActivate(context: ExecutionContext) {
-  //     try {
-  //       const request = context.switchToHttp().getRequest();
-  //       const { id } = request.params;
-  //       const { requestId } = request.query;
-  //       const approver = await this.approverService.findApprover(id);
-
-  //       const requestToApprove = await this.requestService.findRequest(requestId);
-
-  //       if (!approver || !requestToApprove) {
-  //         throw new BadRequestException('Approver or Request Not Found');
-  //       }
-
-  //       const approverAllowedType = approver.approvedRequestTypes;
-
-  //       if (approverAllowedType.length > 0) {
-  //         if (approverAllowedType.includes(RequestType.A)) {
-  //           throw new UnauthorizedException(
-  //             'You are not allowed to approve any request',
-  //           );
-  //         }
-  //         if (
-  //           approverAllowedType.includes(RequestType.B) &&
-  //           requestToApprove.type === RequestType.A
-  //         ) {
-  //           return true;
-  //         }
-
-  //         if (
-  //           approverAllowedType.includes(RequestType.C) &&
-  //           (requestToApprove.type === RequestType.A ||
-  //             requestToApprove.type === RequestType.B)
-  //         ) {
-  //           return true;
-  //         }
-  //       }
-  //     } catch (error) {
-  //       this.logger.error(error);
-  //       throw error;
-  //     }
-  //   }
 
   async canActivate(context: ExecutionContext) {
     try {
@@ -66,7 +25,6 @@ export class ApproverGuard implements CanActivate {
       const { id } = request.params;
       const { requestId } = request.query;
 
-      // Validate input IDs
       if (!id || !requestId) {
         throw new BadRequestException('Invalid IDs provided');
       }
@@ -78,10 +36,16 @@ export class ApproverGuard implements CanActivate {
         throw new NotFoundException('Approver or Request Not Found');
       }
 
+      const isRequestExpired = await this.requestService.isRequestExpired(
+        requestId,
+      );
+      if (isRequestExpired) {
+        throw new BadRequestException('Request has expired');
+      }
+
       const approverAllowedTypes = approver.approvedRequestTypes;
       const requestType = requestToApprove.type;
 
-      // Check for approval eligibility using a switch statement
       switch (true) {
         case approverAllowedTypes.includes(RequestType.A):
           throw new UnauthorizedException(
